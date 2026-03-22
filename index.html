@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#0d0d0d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="description" content="SpeakFlow 82 - Speak clearly with a steady 82 BPM rhythm">
+  <title>SpeakFlow 82</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 12h4l3-9 4 18 3-9h6"/>
+          </svg>
+        </div>
+        <span class="logo-text">SpeakFlow <span class="accent">82</span></span>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="5"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+        </svg>
+        <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+        </svg>
+      </button>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+      <!-- Pulse Circle -->
+      <div class="pulse-container">
+        <div class="pulse-circle" id="pulseCircle">
+          <div class="pulse-inner">
+            <span class="pulse-label">82</span>
+            <span class="pulse-unit">BPM</span>
+          </div>
+        </div>
+        <div class="pulse-ring"></div>
+      </div>
+
+      <!-- Timer Display -->
+      <div class="timer-section">
+        <div class="timer" id="timer">18:00</div>
+        <div class="timer-label">session time</div>
+      </div>
+
+      <!-- Beat Counter -->
+      <div class="beat-counter" id="beatCounter">
+        <span class="bpm-display">82 BPM</span>
+        <span class="separator">•</span>
+        <span class="beats-display"><span id="beatCount">0</span> beats</span>
+      </div>
+
+      <!-- Voice Feedback -->
+      <div class="voice-feedback" id="voiceFeedback">
+        <div class="mic-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/>
+            <path d="M19 10v2a7 7 0 01-14 0v-2M12 19v4M8 23h8"/>
+          </svg>
+        </div>
+        <span class="feedback-text" id="feedbackText">Voice off</span>
+      </div>
+
+      <!-- Controls -->
+      <div class="controls">
+        <button class="btn btn-secondary btn-reset" id="resetBtn" aria-label="Reset">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 109-9 9.75 9.75 0 00-6.74 2.74L3 8"/>
+            <path d="M3 3v5h5"/>
+          </svg>
+        </button>
+        <button class="btn btn-primary btn-main" id="playBtn" aria-label="Start">
+          <svg class="play-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+          <svg class="pause-icon" width="32" height="32" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+            <rect x="6" y="4" width="4" height="16"/>
+            <rect x="14" y="4" width="4" height="16"/>
+          </svg>
+        </button>
+        <button class="btn btn-secondary btn-sound" id="soundBtn" aria-label="Change sound">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+            <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Presets -->
+      <div class="presets">
+        <button class="preset-btn active" data-preset="presentation" id="presetPresentation">
+          <span class="preset-icon">🎤</span>
+          <span class="preset-name">Presentation</span>
+          <span class="preset-details">82 BPM • 15 min</span>
+        </button>
+        <button class="preset-btn" data-preset="teaching" id="presetTeaching">
+          <span class="preset-icon">📚</span>
+          <span class="preset-name">Teaching</span>
+          <span class="preset-details">72 BPM • 20 min</span>
+        </button>
+        <button class="preset-btn" data-preset="practice" id="presetPractice">
+          <span class="preset-icon">🎯</span>
+          <span class="preset-name">Practice</span>
+          <span class="preset-details">90 BPM • 10 min</span>
+        </button>
+      </div>
+
+      <!-- Settings Toggle -->
+      <button class="settings-toggle" id="settingsToggle">
+        <span>Settings</span>
+        <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+
+      <!-- Settings Panel -->
+      <div class="settings-panel" id="settingsPanel">
+        <!-- BPM Setting -->
+        <div class="setting-item">
+          <div class="setting-header">
+            <label for="bpmSlider">Tempo</label>
+            <span class="setting-value" id="bpmValue">82 BPM</span>
+          </div>
+          <div class="slider-container">
+            <input type="range" id="bpmSlider" min="60" max="120" value="82" class="slider">
+            <div class="slider-marks">
+              <span>60</span>
+              <span>90</span>
+              <span>120</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Duration Setting -->
+        <div class="setting-item">
+          <div class="setting-header">
+            <label for="durationSlider">Duration</label>
+            <span class="setting-value" id="durationValue">18 min</span>
+          </div>
+          <div class="slider-container">
+            <input type="range" id="durationSlider" min="1" max="60" value="18" class="slider">
+            <div class="slider-marks">
+              <span>1m</span>
+              <span>30m</span>
+              <span>60m</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sound Selection -->
+        <div class="setting-item">
+          <label>Tick Sound</label>
+          <div class="sound-options">
+            <button class="sound-btn active" data-sound="click">
+              <span class="sound-icon">🔊</span>
+              Click
+            </button>
+            <button class="sound-btn" data-sound="soft">
+              <span class="sound-icon">🔉</span>
+              Soft
+            </button>
+            <button class="sound-btn" data-sound="beep">
+              <span class="sound-icon">🔈</span>
+              Beep
+            </button>
+          </div>
+        </div>
+
+        <!-- Voice Toggle -->
+        <div class="setting-item">
+          <div class="setting-row">
+            <label for="voiceToggle">Voice Feedback</label>
+            <button class="toggle" id="voiceToggle" role="switch" aria-checked="false">
+              <span class="toggle-thumb"></span>
+            </button>
+          </div>
+          <p class="setting-hint">Detects if you're speaking too fast or slow</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Session Complete Overlay -->
+    <div class="overlay" id="sessionOverlay">
+      <div class="overlay-content">
+        <div class="overlay-icon">✓</div>
+        <h2>Session Complete!</h2>
+        <p id="sessionStats">18 minutes • 1314 beats</p>
+        <button class="btn btn-primary" id="overlayClose">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/audio.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
